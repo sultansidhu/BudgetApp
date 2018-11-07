@@ -101,9 +101,15 @@ var Controller = (function(budgetController, UICtrl){
     
     var setupEventListeners = function(){
         
-        var DOM = UICtrl().getDomStrings();
+        var DOM = UICtrl.getDomStrings();
         
-        document.querySelector(DOM.inputButton).addEventListener("click", ctrlAddItem); // adds item if button is clicked
+        //document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem); // adds item if button is clicked
+        document.querySelector(DOM.inputButton).addEventListener('click', function(){
+            var input = UICtrl.getInput();
+            console.log(input);
+            console.log("THE BUTTON PRESSING WORKS");
+            var newItem = budgetController.addItem(input.type, input.description, input.value);
+        });
     
         document.addEventListener("keypress", function(event){ // adds item if enter key is pressed
             if (event.keyCode === 13 || event.which === 13){
@@ -116,11 +122,11 @@ var Controller = (function(budgetController, UICtrl){
         
     var ctrlAddItem = function(){
         // get field item data
-        var input = UICtrl().getInput();
+        var input = UICtrl.getInput();
         console.log(input);
         
         // add data to the budget controller
-        var newItem = budgetController().addItem(input.type, input.description, input.value);
+        var newItem = budgetController.addItem(input.type, input.description, input.value);
         
         // add data to the ui controller
         
@@ -139,7 +145,7 @@ var Controller = (function(budgetController, UICtrl){
     
     };
     
-})(budgetController, UIController);
+})(budgetController(), UIController());
 
 
 Controller.init();
